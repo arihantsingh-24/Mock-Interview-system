@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 enum CallStatus {
   CONNECTING = "CONNECTING",
@@ -9,7 +10,7 @@ enum CallStatus {
 }
 
 const Agent = ({userName}:AgentProps) => {
-  const callStatus = CallStatus.FINISHED;
+  const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const isSpeaking = true;
   const message = [
     "Hello, I am an AI interviewer. I will ask you some questions. Are you ready?",
@@ -58,7 +59,7 @@ const Agent = ({userName}:AgentProps) => {
     <div className="w-full flex justify-center">
       {callStatus !== 'ACTIVE' ?(
         <button className="relative btn-call">
-          <span className={cn('absolute animate-ping rounded-lg opacity-75', callStatus !== 'CONNECTING' & 'hidden')}/>
+          <span className={cn('absolute animate-ping rounded-lg opacity-75', callStatus !== 'CONNECTING' && 'hidden')}/>
           <span>
             {callStatus === 'INACTIVE' || callStatus === 'FINISHED' ? 'CALL' : '. . .'}
           </span>

@@ -23,9 +23,9 @@ export async function SignUp(params: SignUpParams) {
       success: true,
       message: "User created successfully. Please Sign in",
     };
-  } catch (e:any) {
+  } catch (e) {
     console.error("Error creating a user", e);
-    if (e.code === "auth/email-already-exists") {
+    if ((e as { code?: string }).code === "auth/email-already-exists") {
       return {
         success: false,
         message: "Email already exists",
@@ -100,7 +100,7 @@ export async function getCurrentUser(): Promise<User | null> {
   }
 }
 
-export async function isAuthenticated(){
-    const user = await getCurrentUser();
-    return !!user;
+export async function isAuthenticated() {
+  const user = await getCurrentUser();
+  return !!user;
 }
